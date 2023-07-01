@@ -1,0 +1,166 @@
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">ArCalc</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon bi bi-list"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/vat-calculator">VAT Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/nssf-calculator">NSSF Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/loan-calculator">Loan Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">About</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="pt-4 mt-5">
+<div class="container mt-5">
+  <div class="card p-4" style="background-color: #f9f9f9;">
+  
+  <h2 class="text-center fw-bold mb-4">Loans Calculator</h2>
+
+  <form [formGroup]="loanForm" (ngSubmit)="calculateLoan()" class="mt-4">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="loanAmount">Principal</label>
+          <input type="number" id="loanAmount" class="form-control" formControlName="principal">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="interestRate">Rate:</label>
+          <input type="number" id="interestRate" class="form-control" formControlName="rate">
+        </div>
+      </div>
+      <div class="form-group col-md-4" >
+        <label for="paymentDetails">Loan Interval</label>
+        <div class="input-group" >
+          <select id="paymentInterval" class="form-control" formControlName="intervalOption" >
+            <option value="4">Days</option>
+            <option value="3">Weeks</option>
+            <option value="2">Months</option>
+            <option value="1">Years</option>
+          </select>
+          <input type="number" placeholder="Input number" id="time" class="form-control" formControlName="time">
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4">Calculate Loan</button>
+  </form>
+  </div>
+ 
+ <div class="row mt-4"  >
+  <div class="col-md-6">
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h3 class="card-title">Total Amount:</h3>
+        <p class="card-text">{{ response.data.totalAmount }}</p>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h3 class="card-title">Total Interest :</h3>
+        <p class="card-text">{{ response.data.totalInterest }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h4 class="card-title">Principal:</h4>
+        <p class="card-text">{{ response.data.principal }}</p>
+        <h4 class="card-title">Rate:</h4>
+        <p class="card-text">{{ response.data.rate }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h4 class="card-title">Term(In Months):</h4>
+        <p class="card-text">{{ response.data.term }}</p>
+        <h4 class="card-title">Term as Input:</h4>
+        <p class="card-text">{{ response.data.timeOption.time }}</p>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="container mt-5">
+    <h3>How to Use the Calculator</h3>
+    <p>
+      This Loan Calculator allows you to calculate the monthly payment and total payment based on the given
+      loan amount, interest rate, loan term, term unit, and payment interval.
+    </p>
+    <p>
+      Enter the loan amount, interest rate, loan term, term unit (days, weeks, months, years), and payment interval
+      (daily, weekly, monthly).
+      Click the "Calculate Loan" button to perform the calculation. The monthly payment and total payment will be
+      displayed below.
+    </p>
+  </div>
+</div>
+</section>
+
+ <!--Footer-->
+<footer class="footer mt-auto py-3 bg-dark text-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h3 class="text-warning">Our Products</h3>
+        <ul>
+          <li><a target="_blank" href="https://www.arxcess.com/products/banking">Arxcess Banking</a></li>
+          <li><a target="_blank" href="https://erp.arxcess.com/">Arxcess ERP</a></li>
+          <li><a target="_blank" href="https://hr.arxcess.com/">Arxcess HR</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3 class="text-warning" >Our Services</h3>
+        <ul>
+          <li><a  target="_blank" href="https://www.arxcess.com/landing#services">Services Overview</a></li>
+          <li><a  target="_blank" href="/support">Support & Maintenance</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3 class="text-warning">Quick Links</h3>
+        <ul>
+          <li><a  href="/about">About Us</a></li>
+          <li><a target="_blank" href="https://www.arxcess.com/landing#contact">Contact Us</a></li>
+          <li><a  href="/privacy-policy">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3 class="text-warning">Contacts</h3>
+        <p>Makerere Kikoni B</p>
+        <p>Kampala</p>
+        <p>Uganda</p>
+
+        <p>Email: info@arxcess.com</p>
+        <p>Phone: +256 708-774-766</p>
+      </div>
+    </div>
+    <hr> 
+    <p class="text-light text-center  ">&copy; 2023 Arxcess Software. All rights reserved.</p>
+  </div>
+</footer>

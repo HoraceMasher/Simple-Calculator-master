@@ -1,0 +1,214 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <!-- Navigation bar -->
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">ArCalc</a>
+    <!-- Brand/logo and navigation toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon bi bi-list"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Navigation links -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/vat-calculator">VAT Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/nssf-calculator">NSSF Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/loan-calculator">Loan Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">About</a>
+        </li>
+      </ul>
+      <!-- Offcanvas button -->
+      <button class="btn btn-warning" type="button" data-bs-toggle="offcanvas" 
+      data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+      Learn More About NSSF</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Offcanvas content -->
+<div class="offcanvas offcanvas-end btn-warning" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title" id="offcanvasRightLabel">Learn More About NSSF</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- NSSF information -->
+    <h2 class="card-title bg-secondary text-light">NSSF Calculation Terms and Details</h2>
+    <p>
+      The National Social Security Fund (NSSF) is a mandatory social security scheme that provides retirement benefits to employees in many countries. Here are some key terms and details related to NSSF calculation:
+    </p>
+    <ul>
+      <li><strong><mark> <h2>Salary:</h2></mark></strong> This is the total salary earned by an employee before any deductions.</li>
+      <li><strong><mark> <h2>Employee Contribution:</h2></mark></strong> The employee's portion of the contribution to NSSF, typically a percentage of the gross salary.</li>
+      <li><strong><mark> <h2> Employer Contribution:</h2></mark></strong> The employer's portion of the contribution to NSSF, also based on a percentage of the employee's gross salary.</li>
+      <li><strong><mark><h2>Total Contribution:</h2></mark></strong> The sum of the employee and employer contributions, representing the total amount contributed to NSSF.</li>
+    </ul>
+    <p>
+      The NSSF contribution rates and rules may vary by country or region. Make sure to consider the specific regulations applicable to your location and consult with the local social security authority for accurate calculations.
+    </p>
+    <p>
+      For further assistance or clarification regarding NSSF calculations, consult with a human resources professional or refer to the official guidelines provided by your local social security authority.
+    </p>
+
+    <hr>
+    <!-- Footer -->
+    <footer class="bg-dark text-light text-center py-3 mt-5">
+      <p>&copy; 2023 Arxcess Software. All rights reserved.</p>
+    </footer>
+  </div>
+</div>
+
+<section class="pt-5 mt-4">
+  <!-- NSSF Calculator section -->
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12 mx-auto">
+        <h2 class="text-center mb-4">NSSF Calculator</h2>
+
+        <div class="accordion">
+          <!-- Accordion button to toggle information -->
+          <button class="accordion-button" (click)="toggleAccordion()">What To Know About NSSF</button>
+          <div class="accordion-content pt-3" *ngIf="response">
+            <p>{{ response.nssInfo }}</p>
+          </div>
+        </div>
+
+        <!-- NSSF Calculator form -->
+        <form [formGroup]="nssfForm" (ngSubmit)="calculateNssf()" class="mt-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Gross Pay</h5>
+              <div class="form-group">
+                <label for="grossPay">Enter Gross Pay</label>
+                <input type="number" class="form-control" id="grossPay" formControlName="grossPay">
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Calculate Contributions</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Result Cards -->
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Employee Rate:</h5>
+                <p class="card-text">{{ response.data.EMPLOYEE_RATE }}</p>
+                <h5 class="card-title">Employer Rate:</h5>
+                <p class="card-text">{{ response.data.EMPLOYER_RATE }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Employee Contribution:</h5>
+                <p class="card-text">{{ response.data.employeeNssfContribution }}</p>
+                <h5 class="card-title">Employer Contribution (Gross Pay)</h5>
+                <p class="card-text">{{ response.data.employerNssfContribution }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">EMPLOYEE NET PAY:</h5>
+                <p class="card-text">{{ response.data.netPay }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card bg-light mb-3">
+              <div class="card-body">
+                <h5 class="card-title">NSSF TOTAL CONTRIBUTION:</h5>
+                <p class="card-text">{{ response.data.nssfTotalContribution }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <h2>How to Use the Calculator</h2>
+      <p>
+        This NSSF Calculator allows you to calculate the NSSF contributions based on the given gross pay.
+      </p>
+      <p>
+        Enter the gross pay amount in the input field and click the "Calculate Contributions" button to perform the
+        calculation. The employer and employee contributions, as well as the total contribution, will be displayed.
+      </p>
+    </div>
+
+    <div class="mt-5">
+      <h2>More About Nssf</h2>
+      <p>Here are definitions for some key terms related to the National Social Security Fund (NSSF) in Uganda:
+
+        <p>1. National Social Security Fund (NSSF): The NSSF is a statutory public trust fund established by the Ugandan government to provide social security benefits to eligible individuals. It operates as a mandatory saving and investment scheme, aiming to provide retirement benefits, social protection, and financial security to its members.</p>
+        
+       <p> 2. NSSF Payee Tax: It refers to the income tax withheld by the employer from an employee's salary and remitted to the NSSF on behalf of the employee. This tax is deducted by the employer to fulfill the employee's tax obligations.
+      </p>
+      <p> 3. Employee Contribution: The contribution made by the employee to their individual NSSF account. It is a percentage of the employee's monthly gross salary and is deducted by the employer from the employee's wages.
+      </p> 
+     <p>4. Employer Contribution: The contribution made by the employer on behalf of the employee to the employee's NSSF account. It is a percentage of the employee's monthly gross salary, separate from the employee's contribution, and paid directly by the employer to the NSSF.
+    </p> 
+       <p> 5. Self-Employed Individuals: Individuals who are not employed by an employer but work for themselves. Self-employed individuals are responsible for making their own NSSF contributions directly to the NSSF.
+      </p>
+        <p>6. Third-Party Payers: These are entities or organizations, such as payroll service providers or outsourcing companies, who handle payroll processes and may be involved in making NSSF Payee Tax deductions and remittances on behalf of employers.
+        </p>
+        <p>7. Social Security Benefits: Benefits provided by the NSSF to its members. These benefits may include retirement pensions, medical benefits, disability benefits, survivors' benefits, and other forms of social protection.
+        </p>
+        <p>These definitions should give you a basic understanding of the terms commonly associated with the NSSF in Uganda. It's important to note that specific details and regulations related to the NSSF may vary, so consulting the official NSSF guidelines or seeking professional advice is recommended for accurate and up-to-date information.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer mt-auto py-3 bg-dark text-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h3 class="text-warning">Our Products</h3>
+        <ul>
+          <li><a target="_blank" href="https://www.arxcess.com/products/banking">Arxcess Banking</a></li>
+          <li><a target="_blank" href="https://erp.arxcess.com/">Arxcess ERP</a></li>
+          <li><a target="_blank" href="https://hr.arxcess.com/">Arxcess HR</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3 class="text-warning">Our Services</h3>
+        <ul>
+          <li><a target="_blank" href="https://www.arxcess.com/landing#services">Services Overview</a></li>
+          <li><a target="_blank" href="/support">Support & Maintenance</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3 class="text-warning">Quick Links</h3>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a target="_blank" href="https://www.arxcess.com/landing#contact">Contact Us</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3 class="text-warning">Contacts</h3>
+        <p>Makerere Kikoni B</p>
+        <p>Kampala</p>
+        <p>Uganda</p>
+        <p>Email: info@arxcess.com</p>
+        <p>Phone: +256 708-774-766</p>
+      </div>
+    </div>
+    <hr>
+    <p class="text-light text-center">&copy; 2023 Arxcess Software. All rights reserved.</p>
+  </div>
+</footer>
